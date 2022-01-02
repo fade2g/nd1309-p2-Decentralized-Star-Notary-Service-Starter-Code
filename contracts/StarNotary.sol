@@ -1,7 +1,8 @@
-pragma solidity >=0.4.24;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.0;
 
 //Importing openzeppelin-solidity ERC-721 implemented Standard
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 // StarNotary Contract declaration inheritance the ERC721 openzeppelin implementation
 contract StarNotary is ERC721 {
@@ -26,7 +27,7 @@ contract StarNotary is ERC721 {
     function createStar(string memory _name, uint256 _tokenId) public { // Passing the name and tokenId as a parameters
         Star memory newStar = Star(_name); // Star is an struct so we are creating a new Star
         tokenIdToStarInfo[_tokenId] = newStar; // Creating in memory the Star -> tokenId mapping
-        _mint(msg.sender, _tokenId); // _mint assign the the star with _tokenId to the sender address (ownership)
+        _safeMint(msg.sender, _tokenId); // _mint assign the the star with _tokenId to the sender address (ownership)
     }
 
     // Putting an Star for sale (Adding the star tokenid into the mapping starsForSale, first verify that the sender is the owner)
@@ -37,8 +38,8 @@ contract StarNotary is ERC721 {
 
 
     // Function that allows you to convert an address into a payable address
-    function _make_payable(address x) internal pure returns (address payable) {
-        return address(uint160(x));
+    function _make_payable(address genericAddress) internal pure returns (address payable) {
+        return payable(genericAddress);
     }
 
     function buyStar(uint256 _tokenId) public  payable {
@@ -46,11 +47,11 @@ contract StarNotary is ERC721 {
         uint256 starCost = starsForSale[_tokenId];
         address ownerAddress = ownerOf(_tokenId);
         require(msg.value > starCost, "You need to have enough Ether");
-        _transferFrom(ownerAddress, msg.sender, _tokenId); // We can't use _addTokenTo or_removeTokenFrom functions, now we have to use _transferFrom
+        _safeTransfer(ownerAddress, msg.sender, _tokenId, "");
         address payable ownerAddressPayable = _make_payable(ownerAddress); // We need to make this conversion to be able to use transfer() function to transfer ethers
         ownerAddressPayable.transfer(starCost);
         if(msg.value > starCost) {
-            msg.sender.transfer(msg.value - starCost);
+            _make_payable(msg.sender).transfer(msg.value - starCost);
         }
     }
 
@@ -72,5 +73,7 @@ contract StarNotary is ERC721 {
         //1. Check if the sender is the ownerOf(_tokenId)
         //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
     }
+
+    constructor() ERC721("StarNotaryToken", "SNT") {}
 
 }

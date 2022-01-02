@@ -5,6 +5,39 @@
 This Starter Code has already implemented the functionalities you implemented in the StarNotary (Version 2) exercise, and have comments in all the files you need to implement your tasks.
 
 
+### Comments regarding old code from Udacity
+The Udacity nanodegree does not use more current code/tools which makes researching more difficult and prevented successful running of npm install.
+
+In order to be able to complete the course, the following adjustments have been done:
+- OpenZeppelin is installed now using `npm install @openzeppelin/contracts`
+- Import statement for the ERC721 from OpenZeppelin was adjusted to `import "@openzeppelin/contracts/token/ERC721/ERC721.sol";`
+- Constructor of ERC721 must be called with Token name and symbol directly in the contract extending a ERC721 contract, e.g. `constructor() public ERC721("StarNotaryToken", "SNT") {}`
+- Truffle uses by default an older version of the solidity compiler (0.5.x). OpenZeppelin uses 0.8.x version. To mke this work together, adjust truffle-config.js:
+    ```json
+    compilers: {
+        solc: {
+          version: "0.8.0"    // Fetch exact version from solc-bin (default: truffle's version)
+        }
+    }
+    ``` 
+- Implementation of the `Migrations.sol` and `StarNotray.sol` was updated to `pragma solidity ^0.8.0;`
+- Implementation needed to be adjusted:
+  - `_mint` is now `_safeMint`
+  - `_transferFrom` is now `_safeTransfer` (with minor differences in signature)
+- To make an address payable it simply needs to be wrapped in a `paylable()` function
+- Sender addresses for transferring back excess eth must be made a payable address as well
+- web3 works differently
+  - Calling a payable function cannot be done directly, but needs a `.send(from: ...)` added, e.g. `await createStar(name, id).send({from: this.account});`
+- Execution of tests sometimes takes longer than the default async timeout of mocca. For tests taking longer either
+  - add `.timeout(5000)`  at the end of the `it()` function
+  - Warp several tests in then following  `describe` code block (do not use arrow function):
+  ```javascript
+  describe('Slow running tests', function () {
+    // Certain tests take longer than default timout of 2000ms so we need to have a longer timeout
+    // for timeout, see https://stackoverflow.com/a/23492442 and note the comment about arrow functions not working
+    this.timeout(5000);
+  })
+  ``` 
 
 ### Dependencies
 For this project, you will need to have:

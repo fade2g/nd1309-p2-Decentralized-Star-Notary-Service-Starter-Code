@@ -1,9 +1,13 @@
+.idea
+
 build
 # testing
 /coverage
 
 # production
 /build
+
+app/node_modules
 
 # misc
 .DS_Store
