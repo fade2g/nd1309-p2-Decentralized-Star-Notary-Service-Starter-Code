@@ -7,7 +7,7 @@ build
 # production
 /build
 
-app/node_modules
+node_modules
 
 # misc
 .DS_Store

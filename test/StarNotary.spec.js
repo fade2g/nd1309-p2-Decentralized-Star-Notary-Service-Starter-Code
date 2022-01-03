@@ -1,17 +1,8 @@
 const StarNotary = artifacts.require("StarNotary");
 
-var accounts;
-var owner;
+contract('StarNotary', function (accounts) {
+    const owner = accounts[0];
 
-contract('StarNotary', (accs) => {
-    accounts = accs;
-    owner = accounts[0];
-});
-
-describe('Test functionality', function () {
-    // Certain tests take longer than default timout of 2000ms so we need to have a longer timeout
-    // for timeout, see https://stackoverflow.com/a/23492442 and note the comment about arrow functions not working
-    this.timeout(5000);
     it('can Create a Star', async () => {
         let tokenId = 1;
         let instance = await StarNotary.deployed();
