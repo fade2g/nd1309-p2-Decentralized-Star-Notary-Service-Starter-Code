@@ -1,36 +1,61 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <title>StarNotary DAPP</title>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  </head>
-  <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<style>
     input {
-      display: block;
-      margin-bottom: 12px;
+        display: block;
+        margin-bottom: 12px;
     }
-  </style>
-  <body>
-    <h1>StarNotary Token DAPP</h1>
+</style>
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">StarNotary Token DAPP</a>
+    </div>
+</nav>
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card darken-1">
+            <div class="card-content">
+                <span class="card-title">Create a Star</span>
+                <p>
+                    <label for="starName">Star Name:</label><input type="text" id="starName">
+                    <label for="starId">Star ID:</label><input type="text" id="starId">
+                </p>
+            </div>
+            <div class="card-action">
+                <button id="createStar" class="waves-effect waves-light btn" onclick="App.createStar()">Create Star
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <hr>
-
-    <br>
-      <h1>Create a Star</h1>
-      <br><label for="starName">Star Name:</label><input type="text" id="starName"></input>
-      <br><label for="starId">Star ID:</label><input type="text" id="starId"></input>
-      <br><br><button id="createStar" onclick="App.createStar()">Create Star</button>
-      <br>
-      <hr>
-      <br>
-      <h1>Look up a Star</h1>
-      <br><label for="name">Star ID:</label><input type="text" id="lookid"></input>
-      <br><br><button onclick="App.lookUp()">Look Up a Star</button>
-      <p>The star's name is : <span id="lookedUpStarName"></span></p>
-      <hr>
-      <br>
-      <span id="status"></span>
-      <br>
-    <script src="index.js"></script>
-  </body>
+    <div class="col s12 m6">
+        <div class="card darken-1">
+            <div class="card-content">
+                <span class="card-title">Look up a Star</span>
+                <p>
+                    <label for="lookid">Star ID:</label><input type="text" id="lookid">
+                </p>
+                <p>The star's name is:</p>
+                <p id="lookedUpStarName"></p>
+            </div>
+            <div class="card-action">
+                <button id="lookup" class="waves-effect waves-light btn" onclick="App.lookUp()">Look up Star
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12 m4">Status:</div>
+    <div class="col s12 m8" id="status"></div>
+</div>
+<script src="index.js"></script>
+</body>
 </html>
