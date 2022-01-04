@@ -1,10 +1,17 @@
 # ND1309 C2 Ethereum Smart Contracts, Tokens and Dapps - Project Starter 
 **PROJECT: Decentralized Star Notary Service Project** - For this project, you will create a DApp by adding functionality with your smart contract and deploy it on the public testnet.
 
-### ToDo
-This Starter Code has already implemented the functionalities you implemented in the StarNotary (Version 2) exercise, and have comments in all the files you need to implement your tasks.
+## Core ERC721 Contract Information
+- Truffle version: v5.4.24 (core: 5.4.24)
+- Solidity compiler:  0.8.0 (solc-js)
+- OpenZeppelin: 4.4.1
+- Symbol: SNT
+- Name: StarNotaryToken
+- Contract address: 0x7dfe584917a4622779b83bfae7137971b13b53a6
+- Contract [on etherscan](https://rinkeby.etherscan.io/address/0x7dfe584917a4622779b83bfae7137971b13b53a6)
 
 
+## Develpment Notes
 ### Comments regarding old code from Udacity
 The Udacity nanodegree does not use more current code/tools which makes researching more difficult and prevented successful running of npm install.
 
@@ -28,16 +35,6 @@ In order to be able to complete the course, the following adjustments have been 
 - Sender addresses for transferring back excess eth must be made a payable address as well
 - web3 works differently
   - Calling a payable function cannot be done directly, but needs a `.send(from: ...)` added, e.g. `await createStar(name, id).send({from: this.account});`
-- Execution of tests sometimes takes longer than the default async timeout of mocca. For tests taking longer either
-  - add `.timeout(5000)`  at the end of the `it()` function
-  - Warp several tests in then following  `describe` code block (do not use arrow function):
-  ```javascript
-  describe('Slow running tests', function () {
-    // Certain tests take longer than default timout of 2000ms so we need to have a longer timeout
-    // for timeout, see https://stackoverflow.com/a/23492442 and note the comment about arrow functions not working
-    this.timeout(5000);
-  })
-  ``` 
 
 ### Dependencies
 For this project, you will need to have:
