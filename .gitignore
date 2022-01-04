@@ -1,5 +1,7 @@
 .idea
 
+.secret
+
 build
 # testing
 /coverage
