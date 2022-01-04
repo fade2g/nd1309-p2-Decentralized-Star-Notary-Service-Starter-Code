@@ -91,9 +91,9 @@ contract('StarNotary', function (accounts) {
         const user1 = accounts[1];
         const user2 = accounts[2];
         const starId1 = 71;
-        const starName1 =  `test star with id ${starId1}`
+        const starName1 = `test star with id ${starId1}`
         const starId2 = 72;
-        const starName2 =  `test star with id ${starId2}`
+        const starName2 = `test star with id ${starId2}`
         await instance.createStar(starName1, starId1, {from: user1});
         await instance.createStar(starName2, starId2, {from: user2});
         // baseline after minting, before transfer
@@ -103,13 +103,23 @@ contract('StarNotary', function (accounts) {
         // assert after exchange/swapping of tokens
         assert.equal(await instance.ownerOf(starId1), user2, 'star 1 is now owned by account 2');
         assert.equal(await instance.ownerOf(starId2), user1, 'star 2 is now owned by account 1');
-
     });
 
-    xit('lets a user transfer a star', async () => {
+    it('lets a user transfer a star', async () => {
         // 1. create a Star with different tokenId
         // 2. use the transferStar function implemented in the Smart Contract
         // 3. Verify the star owner changed.
+        const instance = await StarNotary.deployed();
+        const user1 = accounts[1];
+        const user2 = accounts[2];
+        const starId = 8;
+        const starName = `test star with id ${starId}`
+        await instance.createStar(starName, starId, {from: user1});
+        // baseline after minting, before transfer
+        assert.equal(await instance.ownerOf(starId), user1, 'star is owned by account 1');
+        await instance.transferStar(user2, starId, {from: user1});
+        // assert after exchange/swapping of tokens
+        assert.equal(await instance.ownerOf(starId), user2, 'star is now owned by account 2');
     });
 
     it('lookUptokenIdToStarInfo test', async () => {
